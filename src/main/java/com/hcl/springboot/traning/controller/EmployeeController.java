@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.springboot.traning.dto.EmployeeDto;
 import com.hcl.springboot.traning.dto.EmployeeReqDto;
-import com.hcl.springboot.traning.dto.EmployeeResponseDto;
 import com.hcl.springboot.traning.entity.Employee;
+import com.hcl.springboot.traning.exception.EmployeeNotFoundException;
 import com.hcl.springboot.traning.service.EmployeeService;
 
 @RestController
@@ -41,59 +41,35 @@ public class EmployeeController {
 		return employeeService.searchEmployees(employeeName);
 	}
 
-	/*
-	 * @GetMapping("/all") public List<Employee> getAllEmployees() { return
-	 * employeeService.getAllEmployees(); }
-	 */
-	@GetMapping("")
-	public ResponseEntity<List<EmployeeDto>> getAllUsers(){ 
+	@GetMapping("/all")
+	public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
 		List<EmployeeDto> employeeDtos = employeeService.getAllEmployees();
 		return new ResponseEntity<List<EmployeeDto>>(employeeDtos, HttpStatus.OK);
 	}
-	
-	/*
-	 * @GetMapping("") public EmployeeResponseDto getAllUsers1(){ List<EmployeeDto>
-	 * EmployeeDtos = employeeService.getAllEmployees(); EmployeeResponseDto
-	 * employeeResponseDto = new EmployeeResponseDto();
-	 * employeeResponseDto.setEmployeeDtos(EmployeeDtos);
-	 * employeeResponseDto.setStatusCode(200);
-	 * employeeResponseDto.setStatusMessage("Success"); return employeeResponseDto;
-	 * }
-	 */
 
-	/*
-	 * @PostMapping("/save") public String registration(@RequestBody Employee
-	 * employee) { employeeService.saveEmployee(employee); return
-	 * "Data Successfully save"; }
-	 */
-	@PostMapping("")
-	public ResponseEntity<String> registration(@RequestBody EmployeeReqDto userReqDto){ 
-		employeeService.saveEmployee(userReqDto);
+	@PostMapping("/save")
+	public ResponseEntity<String> registration(@RequestBody EmployeeReqDto employeeReqDto) {
+		employeeService.saveEmployee(employeeReqDto);
 		return new ResponseEntity<String>("Success", HttpStatus.CREATED);
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestParam String userName, @RequestParam String password) {
-		Employee employee = employeeService.login(userName, password);
+	public String login(@RequestParam String employeeName, @RequestParam String password) {
+		Employee employee = employeeService.login(employeeName, password);
 		if (employee == null) {
 			return "Fail to Login";
 		}
 		return "Login Successfully";
 	}
 
-	/*
-	 * @GetMapping("/{id}") public Employee getById(@PathVariable Integer id) {
-	 * return employeeService.getById(id); }
-	 */
-	
 	@GetMapping("/{id}")
-	public ResponseEntity<EmployeeDto> getById(@PathVariable Integer id){ 
+	public ResponseEntity<EmployeeDto> getById(@PathVariable Integer id) throws EmployeeNotFoundException {
 		EmployeeDto employeeDto = employeeService.getById(id);
-		return new ResponseEntity<EmployeeDto>(employeeDto, HttpStatus.OK);
+		return new ResponseEntity<>(employeeDto, HttpStatus.OK);
 	}
 
 	@PostMapping("/{id}")
-	public String updateUser(@PathVariable Integer id, @RequestBody Employee employee) {
+	public String updateEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
 		return employeeService.updateEmployee(id, employee);
 	}
 

@@ -1,18 +1,18 @@
 package com.hcl.springboot.traning.dto;
 
 public class EmployeeDto {
-	private Integer id;
-	
 	private String employeeName;
 	
 	private String email;
+	
+	private String password;
 
-	public Integer getId() {
-		return id;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getEmployeeName() {

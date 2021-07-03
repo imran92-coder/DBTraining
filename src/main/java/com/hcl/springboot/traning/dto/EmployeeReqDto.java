@@ -1,19 +1,31 @@
 package com.hcl.springboot.traning.dto;
 
+import java.time.LocalDate;
+
 public class EmployeeReqDto {
 	
-	private String EmployeeName;
+	private String employeeName;
 	
 	private String password;
 	
 	private String email;
+	
+	private LocalDate  dateOfJoining;
+
+	public LocalDate getDateOfJoining() {
+		return dateOfJoining;
+	}
+
+	public void setDateOfJoining(LocalDate dateOfJoining) {
+		this.dateOfJoining = dateOfJoining;
+	}
 
 	public String getEmployeeName() {
-		return EmployeeName;
+		return employeeName;
 	}
 
 	public void setEmployeeName(String employeeName) {
-		EmployeeName = employeeName;
+		this.employeeName = employeeName;
 	}
 
 	public String getPassword() {
